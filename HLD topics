@@ -23,4 +23,41 @@ Issues while scaling, updating, fixing bugs on the server. How to migitate them?
 Class 2 : Load Balancing, Sharing and Consistent Hashing
 
 - Vertical and Horizontal scaling
--  
+- Load balancer should know
+    - when a server is up
+    - how to forward requests
+    - when a server is down
+- extra - Blue-Green deploying
+- How LB decides which App server to forward request to?
+  By 
+    based on light weight
+    sequential assignment - currnet server id = last server id + 1 % N (Round Robin algorithm)
+    server specifications - (Weighted Round Robin Algorithm.)
+- How LB know if a server has gone down - Health check(LB checks App server) and HeartBeat(App server informs LB)
+- Infos are stored in DB. DB should also need scaling in time. Here also, horizontal scaling. 
+
+- Sharding - splitting data into diff machines
+- Sharding requirements - data should be uniformly divided and fast fetched
+
+- How data is divided among DBs?
+  
+  Sharding key - parameter based on which data is divided
+    Based on users. 0-100=>DB1, 101-200=>DB2 ...(earlier users has more data)
+    Based on region. India=>DB1... (different countries has different population, app popularity.)
+
+    Both causes uneven distribution of data.
+  
+  Hashing
+    Distribute by user but based on hash function 
+    eg - DBid, h(userid) = userid%N. Issue - N can change and leads to data restructuring
+
+- Consistent Hashing
+  circular ring with values 0 to R
+  h1 = hash serverid and h2 = hash userid
+  NOTE: hash values are for creating randomness
+  implemented using Binary search
+
+  issues- adding servers will not offload work from all servers but only one.
+          cascading failures - failure of one server can lead to cascading failures
+
+- Modified Consistent Hashing
