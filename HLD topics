@@ -61,3 +61,5 @@ Class 2 : Load Balancing, Sharing and Consistent Hashing
           cascading failures - failure of one server can lead to cascading failures
 
 - Modified Consistent Hashing
+    above issues will be handled. Addition and Removal of server wont cause uneven distribution or cascading failures.
+    
