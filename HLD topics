@@ -1,0 +1,26 @@
+https://docs.google.com/spreadsheets/d/1dIRNWIFD8nRDuEFWtbNdw3Arkn8VabPTBEXr23CU_0A/edit#gid=0
+
+Class 1 : HLD - HLD Basics & Consistent Hashing
+
+- Distributed Systems
+- DNS servers
+- IP address - IPv4, IPv6
+- ICANN - Internet corperate for Assigned Names and Numbers; 13 root servers
+- ISP, Google, Cloudfare DNS
+- How ISP, Google etc updates on the domain name to IP address?
+- How ICANN helps in letting ISP etc know the updated IPs - fetching delta
+- del.iciou.us
+- Dynamic and static IP addresses. Why dynamic and why static is costly.
+- public and private IP address. Why private addresses exist. What converts private IP to public - Network address translation (NAT).
+
+How to set up your own server
+- Buy domain name
+- Put that IP in DNS settings on the system
+- Ensure IP is public and static
+
+Issues while scaling, updating, fixing bugs on the server. How to migitate them?
+
+Class 2 : Load Balancing, Sharing and Consistent Hashing
+
+- Vertical and Horizontal scaling
+-  
