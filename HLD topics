@@ -23,19 +23,22 @@ Issues while scaling, updating, fixing bugs on the server. How to migitate them?
 Class 2 : Load Balancing, Sharing and Consistent Hashing
 
 - Vertical and Horizontal scaling
+- Gatway Load balancer
 - Load balancer should know
     - when a server is up
     - how to forward requests
     - when a server is down
+- Rolling deployment
 - extra - Blue-Green deploying
 - How LB decides which App server to forward request to?
   By 
     based on light weight
     sequential assignment - currnet server id = last server id + 1 % N (Round Robin algorithm)
     server specifications - (Weighted Round Robin Algorithm.)
+    IP hashing - (For session persistence like ChatGPT, user IP hashing might be used)
 - How LB know if a server has gone down - Health check(LB checks App server) and HeartBeat(App server informs LB)
-- Infos are stored in DB. DB should also need scaling in time. Here also, horizontal scaling. 
 
+- Infos are stored in DB. DB should also need scaling in time. Here also, horizontal scaling. 
 - Sharding - splitting data into diff machines
 - Sharding requirements - data should be uniformly divided and fast fetched
 
@@ -62,4 +65,37 @@ Class 2 : Load Balancing, Sharing and Consistent Hashing
 
 - Modified Consistent Hashing
     above issues will be handled. Addition and Removal of server wont cause uneven distribution or cascading failures.
-    
+
+Class 3: HLD- Caching - 1
+
+- Depending on stateless or Stateless, Gateway LB decides the App server using Weighted Round Robing or Consistence Hashing.
+- DB is always stateful.
+- stateful is called 'session stickiness'
+- Backup Gateways
+
+- Latency - RTT(Round time - from client to Gateway)+DB time+network time.
+
+- Caching
+a. client side/ in-browser caching
+Why many want their app to be downloaded instead of web browser. So they can use the device's storage for client-side caching and providing better UX.
+
+b. CDN - Content Delivery Network
+Remote central machine with copies of large static data(like medias) to reduce latency. From this central machine many end servers keep the same copies.
+When distance to server is large(FB in US), server has CDN all over the world which has a copy of the data(a 3hr movie etc).
+When the data is requested, instead of sending all that from US, it can respond with the IP of CDN, and the data is fetched from CDN.
+
+c. App server caching
+d. Gloval caching
+
+- problems with caching
+  size limited
+  can be stale (fb likes inconsistency)
+
+- Cache Invalidation Strategy
+  TTL(Time to live). Cache invalidated after x amount of living.
+
+- Cache Eviction Strategies
+  1. FIFO
+  2. LRU //most used
+  3. LIFO
+  4. MRU
