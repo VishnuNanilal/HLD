@@ -159,3 +159,19 @@ Case study-Twitter Feed
  - Store entire news feed of each user in global cache. Cache can also be multiple and data sharded among them. Fetching is easy, but updation can lead to latency. (Celebrity problem) eg: Shah Rukh Khan adding post and all millions get their data updated.
  - Store just past 7 days' data in cache with TTL invalidation.
  
+ Class 6-CAP Theorem & Master-Slave
+ - Intro to CAP and Master-Slave
+ CAP - Consistence, Availability, Partition Tolerance
+ CAP - can only choose 2 among them
+ CA, AP, CP 
+ Partition need to be present. Therefore Partition is present. We have to choose between C and A.
+
+ PACELC if Partition Availability or Consistence Else Latency or Consistence.
+
+ Master-Slave
+ Why sharding along wont help when data grows and how Master Slave helps.
+ Consistence - req->Master->sync slaves->respond; Consistency, less availability
+ 100% Availability - req->Master->responds->sync slaves; Available; less consistency
+    - Eventually Available - FB feed.
+    - Never available - Analytic system.(Mass data)
+  
