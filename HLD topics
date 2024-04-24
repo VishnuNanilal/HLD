@@ -138,4 +138,7 @@ https://----scaler-production-new.*s3*.ap-southeast-1.amazonaws----
 - Why not use TTL method?
   ans: TTL method invalidates unnecessarily as test cases are rarely changed. We only want invalidation if and when the test case files change.
 - How to do that? 
+  *versioning names*
   When test cases files are changed, we set it as a new name to path in DB. (And doesnt change not just the path.) This way cache will check for the new name in File system, will not find it an caches it automatically. Any new requests will use this cache data. 
+
+Class 5
