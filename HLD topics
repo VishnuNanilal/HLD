@@ -1,4 +1,5 @@
 https://docs.google.com/spreadsheets/d/1dIRNWIFD8nRDuEFWtbNdw3Arkn8VabPTBEXr23CU_0A/edit#gid=0
+Numbers every SDE should know : https://gist.github.com/jboner/2841832
 
 Class 1 : HLD - HLD Basics & Consistent Hashing
 
@@ -89,13 +90,52 @@ d. Gloval caching
 
 - problems with caching
   size limited
+  is limited - when power is off, is lost
   can be stale (fb likes inconsistency)
 
 - Cache Invalidation Strategy
-  TTL(Time to live). Cache invalidated after x amount of living.
+  TTL(Time to live). Cache invalidated  after x amount of living.
 
 - Cache Eviction Strategies
   1. FIFO
   2. LRU //most used
   3. LIFO
   4. MRU
+
+Class 4: HLD- Caching - 2
+
+- Ways to keep cache updated with DB
+  a. Write through cache
+    cache->DB->response; (Reads are paused until return). Writes are slower, but read data is consistent.
+  b. Write back cache
+    cache->response->DB updates async; Writes faster, data loss can happen due to server down etc.
+  c. Write around cache
+    DB->response; Writes faster. Reads causes caching with TTL set. Can lead to inconsistent data btwn DB and cache.
+
+
+Belady’s Anomaly
+https://www.geeksforgeeks.org/beladys-anomaly-in-page-replacement-algorithms/
+
+- Case study-Scaler DSA problem solving 
+  -> client sends problem code
+  -> Gatway to App server - fetched input file, puts in code and gets output and compareds output with output file.
+  -> responds with results
+
+- Where should test case input and ouput file stored?
+- Why not CDN?
+- Why not DB?
+  We just store the filename->path(to file system) in DB.
+ans : File stores-File stores accessible via Internet (AWS s3, Azure blockstore)
+eg: Scaler note link
+https://----scaler-production-new.*s3*.ap-southeast-1.amazonaws----
+
+- Why not just use File store and why also cache files on the application server in this case?
+  Solution: file stores has 150 ms of latency. Also store in App server cache to reduce 150ms.
+
+- When test case needs to be updated, there's an issue of cache data invalidation.
+  Invalidation happens in Write around method. Why?
+- How to invalidate data in App cache in this case? 
+- Why not use TTL method?
+  ans: TTL method invalidates unnecessarily as test cases are rarely changed. We only want invalidation if and when the test case files change.
+- How to do that? 
+  When test cases files are changed, we set it as a new name to path in DB. (And doesnt change not just the path.) This way cache will check for the new name in File system, will not find it an caches it automatically. Any new requests will use this cache data. 
