@@ -142,3 +142,20 @@ https://----scaler-production-new.*s3*.ap-southeast-1.amazonaws----
   When test cases files are changed, we set it as a new name to path in DB. (And doesnt change not just the path.) This way cache will check for the new name in File system, will not find it an caches it automatically. Any new requests will use this cache data. 
 
 Class 5
+Case study-Building LeaderBoard in Scaler Contest
+  Unoptimized method-Fetch data from DB, sort and respond.
+  Why it's not possible for 70,000 users?
+
+  Optimized method - cache
+  - Why local cache for each App server cannot be used?
+  - How global cache fixes this problem?
+  Solution-Global cache and TTL invalidation method
+
+Case study-Twitter Feed
+ Unoptimized method-Query data for friends of each users and filter posts based on them.
+ Why it's not possible? Queries among multiple DBs can have large latency. DB can be very large and sharded. We cannot shard in such a way that friends of each user will be in a common DB either. 
+
+ Optimized Solution
+ - Store entire news feed of each user in global cache. Cache can also be multiple and data sharded among them. Fetching is easy, but updation can lead to latency. (Celebrity problem) eg: Shah Rukh Khan adding post and all millions get their data updated.
+ - Store just past 7 days' data in cache with TTL invalidation.
+ 
